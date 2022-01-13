@@ -1,5 +1,8 @@
 package com.danon.webshopdatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,6 +14,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name="users")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class CUser {
     @Id
     //@GenericGenerator(name="UUIDGenerator", strategy = "uuid2")
@@ -19,6 +26,7 @@ public class CUser {
     private UUID id;
 
     @Column(name = "login", updatable = true, nullable = false)
+
     private String login;
 
     @Column(name = "name", updatable = true, nullable = false)
@@ -30,7 +38,8 @@ public class CUser {
     @Column(name = "date_birth", columnDefinition = "DATE")
     private LocalDate dateBirth;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)//не ставить одновременно EAGER тут в COrder иначе все идет по пизде
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)//не ставить одновременно EAGER тут и в COrder
+    @JsonIdentityReference(alwaysAsId = true)
     private List<COrder> orders;
 
     @Override

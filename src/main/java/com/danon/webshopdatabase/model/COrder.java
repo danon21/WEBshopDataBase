@@ -1,5 +1,8 @@
 package com.danon.webshopdatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,6 +14,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class COrder {
 
     @Id
@@ -20,11 +27,12 @@ public class COrder {
     private
     UUID id;
 
-    @Column(name = "purchase_date", columnDefinition = "DATE")
+    @Column(name = "purchase_date", updatable = true, columnDefinition = "DATE")
     LocalDate purchase_date;
 
     @ManyToOne
     @JoinColumn(name = "owner", nullable = false)
+    @JsonIdentityReference(alwaysAsId = true)
     CUser owner;
 
 //    @ManyToOne(cascade = CascadeType.REFRESH)
@@ -32,6 +40,7 @@ public class COrder {
 //    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     @JoinColumn(name = "good", nullable = false)
+    @JsonIdentityReference(alwaysAsId = true)
     CGood good;
 
     @Override
