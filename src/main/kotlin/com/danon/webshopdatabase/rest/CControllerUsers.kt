@@ -25,7 +25,7 @@ class CControllerUsers {
     }
     // Создание или обновление пользователя
     @PostMapping
-    fun save(@RequestBody user: CUser) {
+    fun saveUser(@RequestBody user: CUser) {
         if (user.id == null) {
             user.id = UUID.randomUUID()
         }
@@ -37,7 +37,4 @@ class CControllerUsers {
     fun deleteUser(@RequestBody user: CUser){
         repositoryUsers.delete(user)
     }
-
-
-
 }

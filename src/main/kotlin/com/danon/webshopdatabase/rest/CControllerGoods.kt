@@ -13,7 +13,6 @@ class CControllerGoods {
 
     @Autowired
     private lateinit var repositoryGoods: IRepositoryGoods
-
     //Получение всех товаров из БД
     @GetMapping("")
     fun getAll() : List<CGood>{
@@ -27,10 +26,11 @@ class CControllerGoods {
 
     // Создание или обновление товара
     @PostMapping
-    fun save(@RequestBody good : CGood){
-        if (good.id == null) {
-            good.setGood_id(UUID.randomUUID())
-        }
+    fun saveGood(@RequestBody good : CGood){
+        // если не задано ID товара, генерируем новое
+//        if (good.id == null) {
+//            good.setGood_id(UUID.randomUUID())
+//        }
         repositoryGoods.save(good)
     }
 

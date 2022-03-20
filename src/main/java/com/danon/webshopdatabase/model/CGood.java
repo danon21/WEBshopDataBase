@@ -3,7 +3,6 @@ package com.danon.webshopdatabase.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -34,10 +33,7 @@ public class CGood {
 
     @OneToMany(
             mappedBy = "good",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.REMOVE,
-            orphanRemoval = true
-    )//не ставить одновременно EAGER тут в CUSER иначе все плохо
+            fetch = FetchType.EAGER)//не ставить одновременно EAGER тут в CUSER иначе все плохо
     @JsonIdentityReference(alwaysAsId = true)
     private List<COrder> orders;
 
